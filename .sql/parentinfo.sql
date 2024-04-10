@@ -1,9 +1,10 @@
 CREATE TABLE ParentInfo (
-    ParentID varchar(9),
-    ChildID varchar(9),
-    LastName varchar(50),
-    FirstName varchar(50),
-    PhoneNumber varchar(12),
-    Email varchar(60),
-    Address varchar(255)
+    ParentID int NOT NULL UNIQUE AUTO_INCREMENT,
+    LastName varchar(50) NOT NULL,
+    FirstName varchar(50) NOT NULL,
+    PhoneNumber varchar(12) NOT NULL,
+    Email varchar(60) NOT NULL,
+    ParentAddress varchar(255),
+
+    PRIMARY KEY (ParentID)
 );
