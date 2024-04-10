@@ -1,10 +1,11 @@
 CREATE TABLE ChildInfo (
-    ParentID varchar(9),
-    ChildID varchar(9),
-    FacultyID varchar(9),
-    LastName varchar(50),
-    FirstName varchar(50),
-    Age Int,
+    ChildID int NOT NULL AUTO_INCREMENT,
+    ParentID int NOT NULL UNIQUE AUTO_INCREMENT,
+    LastName varchar(50) NOT NULL,
+    FirstName varchar(50) NOT NULL,
+    Age int NOT NULL,
     Medication varchar(255),
-    Address varchar(255)
+
+    PRIMARY KEY (ChildID),
+    FOREIGN KEY (ParentID) REFERENCES ParentInfo(ParentID)
 );

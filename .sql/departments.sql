@@ -1,5 +1,6 @@
 CREATE TABLE Departments (
-    DepartmentID varchar(4),
-    LocationID varchar(4),
-    DepartmentName varchar(255)
+    DepartmentID int NOT NULL AUTO_INCREMENT,
+    DepartmentName varchar(255),
+
+    PRIMARY KEY (DepartmentID)
 );
