@@ -3,105 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MySQL Project</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        form {
-            margin-bottom: 20px;
-        }
-        input[type="text"],
-        input[type="password"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-            text-align: left;
-        }
-    </style>
+    <title>Daycare Center</title>
+
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to MySQL Project</h1>
-
-        <!-- Login Page -->
-        <div id="loginForm">
-            <h2>Login</h2>
-            <form action="#" method="POST" id="loginForm">
-                <input type="text" name="username" placeholder="Username" required><br>
-                <input type="password" name="password" placeholder="Password" required><br>
-                <button type="submit">Login</button>
-            </form>
-        </div>
-
-        <!-- Data Input Form -->
-        <div id="dataInputForm" style="display: none;">
-            <h2>Data Input Form</h2>
-            <form action="#" method="POST" id="dataForm">
-                <!-- Add input fields for data entry here -->
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-
-        <!-- Data Output Module -->
-        <div id="dataOutputModule" style="display: none;">
-            <h2>Data Output Module</h2>
-            <table id="dataTable">
-                <!-- Add table headers and data rows dynamically using JavaScript -->
-            </table>
-        </div>
-    </div>
-
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Add your login authentication logic here
-            // For simplicity, just show the data input form after login
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('dataInputForm').style.display = 'block';
-        });
-
-        document.getElementById('dataForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Add your data submission logic here
-            // For simplicity, just show the data output module after submission
-            document.getElementById('dataInputForm').style.display = 'none';
-            document.getElementById('dataOutputModule').style.display = 'block';
-            // You can also fetch and display data from MySQL here
-        });
-    </script>
+    
 </body>
 </html>
