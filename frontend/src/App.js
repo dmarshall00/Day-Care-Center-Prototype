@@ -1,11 +1,17 @@
 import React from 'react'
-import Login from './ParentLogin'
+import ParentLogin from './ParentLogin'
+import ParentSignup from './ParentSignup'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div>
-      <Login />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<ParentLogin />}></Route>
+        <Route path='/signup' element={<ParentSignup />}></Route>
+      </Routes>
+      <ParentLogin />
+    </BrowserRouter>
   );
 }
 
