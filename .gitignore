@@ -1,2 +1,4 @@
 node_modules
 .env
+.vscode
+.don't_push
