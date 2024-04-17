@@ -3,10 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import Validation from './ValidationSignup';
 import axios from 'axios'
 
+// let axiosConfig = {
+//     headers: {
+//         'Content-Type' : 'application/json; charset=UTF-8',
+//         'Accept': 'Token',
+//         "Access-Control-Allow-Origin": "*",
+  
+//     }
+//   };
+
 function ParentSignup() {
     const [values, setValues] = useState({
-        username: '',
         email: '',
+        username: '',
         password: ''
     });
 
@@ -15,16 +24,29 @@ function ParentSignup() {
     const [errors, setErrors] = useState({})
 
     const handleInput = (event) =>{
-        setValues(prev => ({...prev, [event.target.name]: [event.target.values]}))
+        console.log([event.target.name] +": " + [event.target.values]);
+        setValues(prev => ({...prev, [event.target.name]: [event.target.value]}))
     }
 
     const handleSubmit = (event) =>{
+        // const emailinput = document.getElementById("email");
+        // const userinput = document.getElementById('username');
+        // const passwordinput = document.getElementById('password');
+        // const emailv = emailinput.value;
+        // const usernamev = userinput.value;
+        // const passwordv = passwordinput.value;
+
+        // setValues(prev => ({...prev, "email": emailv}));
+        // setValues(prev => ({...prev, "username": usernamev}));
+        // setValues(prev => ({...prev, "empasswordail": passwordv}));
+
         event.preventDefault();
-        setErrors(Validation(values))
+        setErrors(Validation(values));
         if(errors.username === "" && errors.email === "" && errors.password === ""){
             axios.post('http://localhost:3001/signup', values)
             .then(res => {
-                console.log("worked \n", res);
+                console.log("worked \n", values);
+                console.log(res);
                 navigate('/');
             })
             .catch(err => console.log(err));
@@ -39,21 +61,21 @@ function ParentSignup() {
                     <div className='mb-3'>
                         <label htmlFor="email"><strong>Email</strong></label>
                         <input type="email" placeholder="Email" name='email'
-                        onChange={handleInput} className='form-control rounded-0'/>
+                        id='email' onChange={handleInput} className='form-control rounded-0'/>
                         {errors.email && <span className='text-danger'> {errors.email}</span>}
                     </div>
 
                     <div className='mb-3'>
                         <label htmlFor="username"><strong>Username</strong></label>
                         <input type="username" placeholder="Username" name='username'
-                        onChange={handleInput} className='form-control rounded-0'/>
+                        id='username' onChange={handleInput} className='form-control rounded-0'/>
                         {errors.username && <span className='text-danger'> {errors.username}</span>}
                     </div>
 
                     <div className='mb-3'>
                         <label htmlFor="password"><strong>Password</strong></label>
                         <input type="password" placeholder="Password" name='password'
-                        onChange={handleInput} className='form-control rounded-0'/>
+                        id='password' onChange={handleInput} className='form-control rounded-0'/>
                         {errors.password && <span className='text-danger'> {errors.password}</span>}
                     </div>
 
