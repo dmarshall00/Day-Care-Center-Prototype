@@ -1,16 +1,7 @@
 import React, {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import Validation from './ValidationSignup';
-import axios from 'axios'
-
-// let axiosConfig = {
-//     headers: {
-//         'Content-Type' : 'application/json; charset=UTF-8',
-//         'Accept': 'Token',
-//         "Access-Control-Allow-Origin": "*",
-  
-//     }
-//   };
+import axios from 'axios';
 
 function ParentSignup() {
     const [values, setValues] = useState({
@@ -29,17 +20,6 @@ function ParentSignup() {
     }
 
     const handleSubmit = (event) =>{
-        // const emailinput = document.getElementById("email");
-        // const userinput = document.getElementById('username');
-        // const passwordinput = document.getElementById('password');
-        // const emailv = emailinput.value;
-        // const usernamev = userinput.value;
-        // const passwordv = passwordinput.value;
-
-        // setValues(prev => ({...prev, "email": emailv}));
-        // setValues(prev => ({...prev, "username": usernamev}));
-        // setValues(prev => ({...prev, "empasswordail": passwordv}));
-
         event.preventDefault();
         setErrors(Validation(values));
         if(errors.username === "" && errors.email === "" && errors.password === ""){
@@ -79,7 +59,7 @@ function ParentSignup() {
                         {errors.password && <span className='text-danger'> {errors.password}</span>}
                     </div>
 
-                    <button className='btn btn-success w-100 rounded-0'><strong>Sign up</strong></button>
+                    <button type='submit' className='btn btn-success w-100 rounded-0'><strong>Sign up</strong></button>
                     <p>Words that means something else</p>
                     <Link to="/" className='btn btn-default border w-100 bg-light'><strong>Log in</strong></Link>
                 </form>

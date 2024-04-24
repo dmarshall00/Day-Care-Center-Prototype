@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
-import { Link } from 'react-router-dom';
-import Validation from './ValidationLogin'
+import React, {useState} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Validation from './ValidationLogin';
+import axios from 'axios';
 
 function ParentLogin() {
     const [values, setValues] = useState({
@@ -8,15 +9,33 @@ function ParentLogin() {
         password: ''
     });
 
+    const navigate = useNavigate();
+
     const [errors, setErrors] = useState({})
 
     const handleInput = (event) =>{
+        console.log([event.target.name] +": " + [event.target.values]);
         setValues(prev => ({...prev, [event.target.name]: [event.target.values]}))
     }
 
     const handleSubmit = (event) =>{
         event.preventDefault();
-        setErrors(Validation(values))
+        setErrors(Validation(values));
+        if(errors.username === "" && errors.password === ""){
+            axios.post('http://localhost:3001/login', values)
+            .then(res => {
+                console.log("worked \n", values);
+                console.log(res);
+                if(res.data === "Success"){
+                    console.log("Login Worked");
+                    navigate('/home');
+                }
+                else{
+                    alert("No records");
+                }
+            })
+            .catch(err => console.log(err));
+        }
     }
 
     return(
@@ -27,14 +46,14 @@ function ParentLogin() {
                     <div className='mb-3'>
                         <label htmlFor="username"><strong>Username</strong></label>
                         <input type="username" placeholder="Username" name='username'
-                        onChange={handleInput} className='form-control rounded-0'/>
+                        id='username' onChange={handleInput} className='form-control rounded-0'/>
                         {errors.username && <span className='text-danger'> {errors.username}</span>}
                     </div>
 
                     <div className='mb-3'>
                         <label htmlFor="password"><strong>Password</strong></label>
                         <input type="password" placeholder="Password" name='password'
-                        onChange={handleInput} className='form-control rounded-0'/>
+                        id='password' onChange={handleInput} className='form-control rounded-0'/>
                         {errors.password && <span className='text-danger'> {errors.password}</span>}
                     </div>
 
