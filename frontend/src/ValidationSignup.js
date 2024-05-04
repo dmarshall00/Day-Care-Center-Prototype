@@ -28,7 +28,7 @@ function Validation(values){
         error.password = "Password should not be empty";
     }
     else if(password_pattern.test(values.password)){
-
+        error.password = "Bad password";
     }
     else{
         error.password = "";

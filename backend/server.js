@@ -3,7 +3,7 @@
 require('dotenv').config();
 
 HOST = process.env.HOST
-USER = process.env.USER3
+USER = process.env.USER
 PASSWORD = process.env.PASSWORD
 DBASE = process.env.DBASE
 PORT = process.env.PORT
@@ -75,10 +75,10 @@ var parenttable = sequelize.define("Parentinfo", {
 });
 
 app.post('/signup', (req, res) => {
-    console.log("----------------\nWorked");
-    sequelize.sync(() => {
-        console.log("----------------\nSequelize synced");
-    }).then(() => {
+    console.log("----------------\nSigning Working");
+    console.log(req.body);
+    sequelize.sync()
+    .then(() => {
         parenttable.create({
             UserName: req.body.username[0],
             Email: req.body.email[0],
@@ -86,44 +86,45 @@ app.post('/signup', (req, res) => {
         }).then(results => {
             console.log("----------------\nSequelize Worked");
             console.log(results.dataValues);
+            return res.json({Registration: true});
         }).catch((error) => {
-            console.error('----------------\nFailed to create a new record: \n', error);
+            console.error(error, '\n----------------\nFailed to create a new record: \n');
+            return res.json({Registration: false});
         });
     }).catch((error) => {
         console.error("----------------\nSequelize failed to sync\n", error);
     });
-
-    console.log(req.body);
 });
 
 app.post('/login', (req, res) => {
-    console.log("----------------\nWorked");
-    sequelize.sync(() => {
-        console.log("----------------\nSequelize synced");
-    }).then(() => {
+    console.log("----------------\nLogin Working");
+    const username = req.body.user[0];
+    const password = req.body.pwd[0];
+    sequelize.sync()
+    .then(() => {
         console.log("----------------\n", req.body, "\n");
         parenttable.findAll({
             where: {
-                UserName: req.body.username[0],
-                Password: req.body.password[0]
+                UserName: username,
+                Password: password
             }
         }).then(data => {
-            console.log("----------------\n", data, "\n");
+            console.log("----------------\n", data, "\n----------------");
             if(data.length > 0)
             {
-                return res.json("Success");
+                console.log("Success");
+                return res.json({Login: true});
             }else{
-                return res.json("Failed");
+                console.log("Failed");
+                return res.json({Login: false});
             }
         })
     }).catch((error) => {
-        console.error("----------------\nSequelize failed to sync\n", error);
+        return res.json({Message: "Error:\n" + error});
     });
-
-    console.log(req.body);
 });
 
-var port = 3001
+var port = 3030
 
 app.listen(port, ()=>{
     console.log(`Server Started on port localhost:${port}...`)
