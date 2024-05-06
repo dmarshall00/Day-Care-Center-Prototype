@@ -1,4 +1,4 @@
-function Validation(values){
+export function Validation(values){
     let error = {}
     //const email_pattern = /^[^\s@]+@[^\s@]+[^\s@]+$/;
     const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
@@ -33,7 +33,20 @@ function Validation(values){
     else{
         error.password = "";
     }
+
+    if(values.user === "")
+    {
+        error.user = "Please select the user";
+    }
+    else
+    {
+        error.user = ""
+    }
+
     return error;
 }
 
-export default Validation;
+export function CheckValidation(errors)
+{
+    return (errors.username === "" && errors.email === "" && errors.password === "" && errors.user === "");
+}

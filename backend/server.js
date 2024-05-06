@@ -1,23 +1,23 @@
-//import { Op } from '@sequelize/core';
+import { sequelize, Environment, ChooseTable } from './Table.mjs';
+import pkg from 'express';
+import cors from 'cors';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 
-require('dotenv').config();
+// const express = require('express');
+// const cors = require('cors');
+// const session = require('express-session');
+// const cookies = require('cookie-parser');
+// const bodyparser = require('body-parser');
+Environment();
 
-HOST = process.env.HOST
-USER = process.env.USER
-PASSWORD = process.env.PASSWORD
-DBASE = process.env.DBASE
-PORT = process.env.PORT
-
-const express = require('express');
-const mysql = require('mysql');
-const cors = require('cors');
-const session = require('express-session');
-const cookies = require('cookie-parser');
-
-const app = express();
+const Express = pkg;
+const app = Express();
 app.use(cors());
-app.use(express.json());
-app.use(cookies());
+app.use(Express.json());
+app.use(cookieParser());
+app.use(bodyParser.json())
 app.use(session({
     secret: 'secret',
     resave: false,
@@ -26,18 +26,7 @@ app.use(session({
         secure: false,
         maxAge: 1000 * 60 * 60 * 24
     }
-}))
-
-const {Sequelize, DataTypes} = require('sequelize')
-const sequelize = new Sequelize(
-    DBASE,
-    USER,
-    PASSWORD,
-    {
-        host: HOST,
-        dialect: 'mysql'
-    }
-);
+}));
 
 sequelize.authenticate().then(()=>{
     console.log("----------------\nSequelize connected...");
@@ -45,46 +34,15 @@ sequelize.authenticate().then(()=>{
     console.error("----------------\nSequelize not connected...", error);
 });
 
-var parenttable = sequelize.define("Parentinfo", {
-    ParentID: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    UserName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
-    Password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    FirstName: {
-        type: DataTypes.STRING
-    },
-    LastName: {
-        type: DataTypes.STRING
-    },
-    PhoneNumber: {
-        type: DataTypes.STRING
-    },
-    Email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
-    ParentAddress: {
-        type: DataTypes.STRING
-    }
-});
-
 app.post('/signup', (req, res) => {
     console.log("----------------\nSigning Working");
     console.log(req.body);
+
+    var table = ChooseTable(req.body.user[0]);
+
     sequelize.sync()
     .then(() => {
-        parenttable.create({
+        table.create({
             UserName: req.body.username[0],
             Email: req.body.email[0],
             Password: req.body.password[0]
@@ -105,10 +63,13 @@ app.post('/login', (req, res) => {
     console.log("----------------\nLogin Working");
     const username = req.body.user[0];
     const password = req.body.pwd[0];
+
+    var table = ChooseTable(req.body.user[0]);
+
     sequelize.sync()
     .then(() => {
         console.log("----------------\n", req.body, "\n");
-        parenttable.findAll({
+        table.findAll({
             where: {
                 UserName: username,
                 Password: password

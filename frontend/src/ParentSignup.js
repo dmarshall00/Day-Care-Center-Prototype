@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import Validation from './ValidationSignup';
+import {Validation, CheckValidation} from './ValidationSignup';
 import axios from 'axios';
 
 function ParentSignup() {
     const [values, setValues] = useState({
         email: '',
         username: '',
-        password: ''
+        password: '',
+        user: ''
     });
 
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ function ParentSignup() {
     const [errors, setErrors] = useState({})
 
     const handleInput = (event) =>{
-        //console.log([event.target.name] +": " + [event.target.value]);
+        console.log([event.target.name] +": " + [event.target.value]);
         setValues(prev => ({...prev, [event.target.name]: [event.target.value]}));
     }
 
@@ -24,7 +25,7 @@ function ParentSignup() {
         event.preventDefault();
         setErrors(Validation(values));
         console.log(values);
-        if(errors.username === "" && errors.email === "" && errors.password === ""){
+        if(CheckValidation(errors)){
             axios.post('http://localhost:3030/signup', values)
             .then((res) => {
                 if(res.data.Registration){
@@ -85,11 +86,13 @@ function ParentSignup() {
                     </div>
 
                     <div className='mb-3'>
-                        <select name="User" id="User">
+                        <select name="User" id="User" onChange={handleInput}>
+                            <option value="">-- Select User</option>
                             <option value="Parent">Parent</option>
                             <option value="Faculty">Faculty</option>
                             <option value="Admin">Admin</option>
                         </select>
+                        {errors.email && <span className='text-danger'> {errors.user}</span>}
                     </div>
 
                     <button type='submit' className='btn btn-success w-100 rounded-0'><strong>Sign up</strong></button>
