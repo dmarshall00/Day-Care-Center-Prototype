@@ -11,17 +11,22 @@ PORT = process.env.PORT
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const session = require('express-session');
+const cookies = require('cookie-parser');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-// const db = mysql.createConnection({
-//     host: HOST,
-//     user: USER,
-//     password: PASSWORD,
-//     database: DBASE
-// })
+app.use(cookies());
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie:{
+        secure: false,
+        maxAge: 1000 * 60 * 60 * 24
+    }
+}))
 
 const {Sequelize, DataTypes} = require('sequelize')
 const sequelize = new Sequelize(
@@ -112,16 +117,36 @@ app.post('/login', (req, res) => {
             console.log("----------------\n", data, "\n----------------");
             if(data.length > 0)
             {
-                console.log("Success");
-                return res.json({Login: true});
+                req.session.username = data[0].UserName;
+                console.log("Success: ", req.session.username);
+                return res.json({
+                    Login: true,
+                    username: req.session.username
+                });
             }else{
                 console.log("Failed");
-                return res.json({Login: false});
+                return res.json({
+                    Login: false
+                });
             }
         })
     }).catch((error) => {
         return res.json({Message: "Error:\n" + error});
     });
+});
+
+app.get('/home', (req, res) => {
+    if(req.session.username){
+        return res.json({
+            valid: true, 
+            username: req.session.username
+        })
+    }
+    else{
+        return res.json({
+            valid: false
+        })
+    }
 });
 
 var port = 3030

@@ -84,6 +84,14 @@ function ParentSignup() {
                         {errors.password && <span className='text-danger'> {errors.password}</span>}
                     </div>
 
+                    <div className='mb-3'>
+                        <select name="User" id="User">
+                            <option value="Parent">Parent</option>
+                            <option value="Faculty">Faculty</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+
                     <button type='submit' className='btn btn-success w-100 rounded-0'><strong>Sign up</strong></button>
                     <p>Words that means something else</p>
                     <Link to="/" className='btn btn-default border w-100 bg-light'><strong>Log in</strong></Link>
