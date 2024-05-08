@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 var HOST;
-var USER = process.env.USER3;
-var PASSWORD = process.env.PASSWORD;
-var DBASE = process.env.DBASE;
-var PORT = process.env.PORT;
+var USER;
+var PASSWORD;
+var DBASE;
+var PORT;
 
 export function Environment()
 {
