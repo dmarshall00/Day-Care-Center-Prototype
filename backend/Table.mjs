@@ -31,12 +31,14 @@ export function ChooseTable(user)
 {
     switch (user)
     {
-        case "Parent":
+        case 'Parent':
             return parenttable;
-        case "Faculty":
+        case 'Faculty':
             return facultytable;
-        case "Admin":
+        case 'Admin':
             return admintable;
+        default:
+            return null;
     }
 }
 

@@ -14,7 +14,11 @@ Environment();
 
 const Express = pkg;
 const app = Express();
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:3001"],
+    methods: ["POST", "GET"],
+    credentials: true
+}));
 app.use(Express.json());
 app.use(cookieParser());
 app.use(bodyParser.json())
@@ -38,7 +42,7 @@ app.post('/signup', (req, res) => {
     console.log("----------------\nSigning Working");
     console.log(req.body);
 
-    var table = ChooseTable(req.body.user[0]);
+    var table = ChooseTable(req.body.User[0]);
 
     sequelize.sync()
     .then(() => {
@@ -61,10 +65,10 @@ app.post('/signup', (req, res) => {
 
 app.post('/login', (req, res) => {
     console.log("----------------\nLogin Working");
-    const username = req.body.user[0];
-    const password = req.body.pwd[0];
+    const username = req.body.username[0];
+    const password = req.body.password[0];
 
-    var table = ChooseTable(req.body.user[0]);
+    var table = ChooseTable(req.body.User[0]);
 
     sequelize.sync()
     .then(() => {
@@ -79,7 +83,7 @@ app.post('/login', (req, res) => {
             if(data.length > 0)
             {
                 req.session.username = data[0].UserName;
-                console.log("Success: ", req.session.username);
+                console.log("Success:", req.session.username);
                 return res.json({
                     Login: true,
                     username: req.session.username
@@ -97,15 +101,16 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-    if(req.session.username){
+    console.log(req.session.username);
+    if(req.session.username === ""){
         return res.json({
-            valid: true, 
-            username: req.session.username
+            valid: false
         })
     }
     else{
         return res.json({
-            valid: false
+            username: req.session.username,
+            valid: true, 
         })
     }
 });
