@@ -1,16 +1,9 @@
-import { sequelize, Environment, ChooseTable } from './Table.mjs';
+import { sequelize, ChooseTable } from './Table.mjs';
 import pkg from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-
-// const express = require('express');
-// const cors = require('cors');
-// const session = require('express-session');
-// const cookies = require('cookie-parser');
-// const bodyparser = require('body-parser');
-Environment();
 
 const Express = pkg;
 const app = Express();
@@ -31,6 +24,8 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24
     }
 }));
+
+var port = 3030;
 
 sequelize.authenticate().then(()=>{
     console.log("----------------\nSequelize connected...");
@@ -100,7 +95,7 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.get('/home', (req, res) => {
+app.get('/phome', (req, res) => {
     console.log(req.session.username);
     if(req.session.username === ""){
         return res.json({
@@ -115,7 +110,35 @@ app.get('/home', (req, res) => {
     }
 });
 
-var port = 3030
+app.get('/fhome', (req, res) => {
+    console.log(req.session.username);
+    if(req.session.username === ""){
+        return res.json({
+            valid: false
+        })
+    }
+    else{
+        return res.json({
+            username: req.session.username,
+            valid: true, 
+        })
+    }
+});
+
+app.get('/ahome', (req, res) => {
+    console.log(req.session.username);
+    if(req.session.username === ""){
+        return res.json({
+            valid: false
+        })
+    }
+    else{
+        return res.json({
+            username: req.session.username,
+            valid: true, 
+        })
+    }
+});
 
 app.listen(port, ()=>{
     console.log(`Server Started on port localhost:${port}...`)

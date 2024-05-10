@@ -2,20 +2,11 @@ import {Sequelize, DataTypes} from 'sequelize';
 import dotenv from 'dotenv';
 dotenv.config();
 
-var HOST;
-var USER;
-var PASSWORD;
-var DBASE;
-var PORT;
-
-export function Environment()
-{
-    HOST = process.env.HOST
-    USER = process.env.USER3
-    PASSWORD = process.env.PASSWORD
-    DBASE = process.env.DBASE
-    PORT = process.env.PORT
-}
+var HOST = process.env.HOST;
+var USER = process.env.USER3;
+var PASSWORD = process.env.PASSWORD;
+var DBASE = process.env.DBASE;
+var PORT = process.env.PORT;
 
 export const sequelize = new Sequelize(
     DBASE,
