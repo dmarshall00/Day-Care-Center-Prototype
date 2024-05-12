@@ -1,49 +1,108 @@
 <!DOCTYPE html>
 
-<html lang ="en" dir="ltr">
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Faculty Webpage</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="grid-container">
+            <header class="header">
+                <div class="menu-icon" onclick="openSidebar()">
+                    <span class="material-symbols-outlined">menu</span>
+                </div>
+                <div class="header-left">
+                    <span class="material-symbols-outlined">search</span>
+                </div>
+                <div class="header-right">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="material-symbols-outlined">mail</span>
+                    <span class="material-symbols-outlined">account_circle</span>
+                </div>
+            </header>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculty Page</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+            <aside id="sidebar">
+                <div class="sidebar-title">
+                    <div class="sidebar-brand">
+                        <span class="material-symbols-outlined">inventory</span> My Appointments
+                    </div>
+                    <span class="material-symbols-outlined" onclick="closeSidebar()">close</span>
+                </div>
 
-<header>
-    <div class="content flex_space">
-        <div class="logo"></div>
-            <img src="image/logo.svg" alt="">
-    </div>
-    <div class="navlinks">
-        <ul id="menulist">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#appointments">Appointments</a></li>
-            <li><a href="#departments">Departments</a></li>
-            <li><a href="#locations">Locations</a></li>
-            <li><a href="#childinfo">Child info</a></li>
-            <li><a href="#parentinfo">Parent Info</a></li>
-            <li> <button class="primary-btn">BOOK NOW</button></li>
-        </ul>
-        <span class="fa fa-bars"></span>
-    </div>
-</div>
+                <ul class="sidebar-list">
+                    <li class="sidebar-list-item">
+                        <span class="material-symbols-outlined">dashboard</span> Dashboard
+                    </li>
+                </ul>
 
-</header>
+                <ul class="sidebar-list">
+                    <li class="sidebar-list-item">
+                        <span class="material-symbols-outlined">child_care</span> Child Information
+                    </li>
+                </ul>
 
-<script>
-    var menulist = document.getElementById('menulist');
-    menuslist.style.maxHeight = "0px";
+                <ul class="sidebar-list">
+                    <li class="sidebar-list-item">
+                        <span class="material-symbols-outlined">guardian</span> Parent Information
+                    </li>
+                </ul>
 
-    function menutoggle() {
-        if(menuslist.style.maxHeight = "0px") {
-            menulist.style.maxHeight = "100vh";
-        }
-        else {
-            meulist.style.maxHeight = "0px";
-        }
-    }
-</script>
+                <ul class="sidebar-list">
+                    <li class="sidebar-list-item">
+                        <span class="material-symbols-outlined">settings</span> Settings
+                    </li>
+                </ul>
+            </aside>
 
+            <main class="main-container">
+                <div class="main-title">
+                    <p class="font-weight-bold">DASHBOARD</p>
+                </div>
+
+                <div class="main-cards">
+
+                    <div class="card">
+                        <div class="card-inner">
+                            <p class="text-primary">COMPLETED APPOINTMENTS </p>
+                            <span class="material-symbols-outlined text-blue">inventory</span>
+                        </div>
+                        <span class="text-primary font-weight-bold">20</span>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-inner">
+                            <p class="text-primary">INCOMPLETE APPOINTMENTS </p>
+                            <span class="material-symbols-outlined text-blue">inventory</span>
+                        </div>
+                        <span class="text-primary font-weight-bold">0</span>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-inner">
+                            <p class="text-primary">CHECKED-IN </p>
+                            <span class="material-symbols-outlined text-blue">done</span>
+                        </div>
+                        <span class="text-primary font-weight-bold">0</span>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-inner">
+                            <p class="text-primary">CHECKED-OUT </p>
+                            <span class="material-symbols-outlined text-blue">close</span>
+                        </div>
+                        <span class="text-primary font-weight-bold">20</span>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+        <script src="scripts.js"> </script>
+    </body>
 </html>
