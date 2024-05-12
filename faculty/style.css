@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css?family=serif");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family:'Times New Roman', Times, serif;
+}
+
+h1, h2 {
+    font-family:'Times New Roman', Times, serif;
+    font-weight: 400;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex_space {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    border: none;
+    background: none;
+    outline: none;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.primary-btn {
+    padding: 15px 40 px;
+    background: none;
+    border: 2px solid white;
+    font-weight: bold;
+    color: white;
+}
+
+header {
+    height: 10vh;
+    line-height: 10vh;
+    padding: 0 20px;
+}
+
+header img {
+    margin: 20px 0;
+}
+
+header u1 {
+    display: inline-block;
+}
+
+header u1 li {
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+header u1 li a {
+    color: #000;
+    margin: 0 10px;
+    transition: 0.5s;
+}
+
+header ul li a:hover {
+    color: #ffff;
+}
+
+header i {
+    margin: 0 20px;
+}
+
+header button {
+    padding: 13px 40 px;
+}
+
+header .navlinks span {
+    display: none;
+}

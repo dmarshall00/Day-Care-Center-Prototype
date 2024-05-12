@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang ="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="content flex_space">
+        <div class="logo"></div>
+            <img src="image/logo.svg" alt="">
+    </div>
+    <div class="navlinks">
+        <ul id="menulist">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#appointments">Appointments</a></li>
+            <li><a href="#departments">Departments</a></li>
+            <li><a href="#locations">Locations</a></li>
+            <li><a href="#childinfo">Child info</a></li>
+            <li><a href="#parentinfo">Parent Info</a></li>
+            <li> <button class="primary-btn">BOOK NOW</button></li>
+        </ul>
+        <span class="fa fa-bars"></span>
+    </div>
+</div>
+
+</header>
+
+<script>
+    var menulist = document.getElementById('menulist');
+    menuslist.style.maxHeight = "0px";
+
+    function menutoggle() {
+        if(menuslist.style.maxHeight = "0px") {
+            menulist.style.maxHeight = "100vh";
+        }
+        else {
+            meulist.style.maxHeight = "0px";
+        }
+    }
+</script>
+
+</html>
