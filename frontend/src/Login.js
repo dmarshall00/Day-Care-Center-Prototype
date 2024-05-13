@@ -23,7 +23,6 @@ function ParentLogin() {
 
     const handleSubmit = async (event) =>{
         event.preventDefault();
-        console.log(values);
         setErrors(Validation(values));
         if(CheckValidation(errors)){
             console.log(values);

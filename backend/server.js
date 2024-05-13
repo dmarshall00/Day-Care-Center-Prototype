@@ -4,11 +4,12 @@ import cors from 'cors';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import { ParentProfile } from './parentface.mjs';
 
 const Express = pkg;
 const app = Express();
 app.use(cors({
-    origin: ["http://localhost:3001"],
+    origin: ["http://localhost:3000"],
     methods: ["POST", "GET"],
     credentials: true
 }));
@@ -26,6 +27,7 @@ app.use(session({
 }));
 
 var port = 3030;
+var workingTable;
 
 sequelize.authenticate().then(()=>{
     console.log("----------------\nSequelize connected...");
@@ -64,6 +66,7 @@ app.post('/login', (req, res) => {
     const password = req.body.password[0];
 
     var table = ChooseTable(req.body.User[0]);
+    workingTable = table;
 
     sequelize.sync()
     .then(() => {
@@ -77,11 +80,37 @@ app.post('/login', (req, res) => {
             console.log("----------------\n", data, "\n----------------");
             if(data.length > 0)
             {
+                //req.session.ID = data[0].ParentID;
+                switch (req.body.User[0])
+                {
+                    case 'Parent':
+                        req.session.ID = data[0].ParentID;
+                        req.session.Address = data[0].ParentAddress;
+                        break;
+                    case 'Faculty':
+                        req.session.ID = data[0].FacultyID;
+                        break;
+                    case 'Admin':
+                        req.session.ID = data[0].AdminID;
+                        break;
+                    default:
+                        console.error("No user!");
+                }
                 req.session.username = data[0].UserName;
+                req.session.Fname = data[0].FirstName;
+                req.session.Lname = data[0].LastName;
+                req.session.Pnum = data[0].PhoneNumber;
+                req.session.Email = data[0].Email;
+
                 console.log("Success:", req.session.username);
                 return res.json({
                     Login: true,
-                    username: req.session.username
+                    username: req.session.username,
+                    Fname: req.session.Fname,
+                    Lname: req.session.Lname,
+                    Pnum: req.session.Pnum,
+                    Email: req.session.Email,
+                    Address: req.session.Address
                 });
             }else{
                 console.log("Failed");
@@ -95,7 +124,7 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.get('/phome', (req, res) => {
+app.get('/home', (req, res) => {
     console.log(req.session.username);
     if(req.session.username === ""){
         return res.json({
@@ -105,40 +134,18 @@ app.get('/phome', (req, res) => {
     else{
         return res.json({
             username: req.session.username,
+            Fname: req.session.Fname,
+            Lname: req.session.Lname,
+            Pnum: req.session.Pnum,
+            Email: req.session.Email,
+            Address: req.session.Address,
+            values: req.session.values,
             valid: true, 
         })
     }
 });
 
-app.get('/fhome', (req, res) => {
-    console.log(req.session.username);
-    if(req.session.username === ""){
-        return res.json({
-            valid: false
-        })
-    }
-    else{
-        return res.json({
-            username: req.session.username,
-            valid: true, 
-        })
-    }
-});
-
-app.get('/ahome', (req, res) => {
-    console.log(req.session.username);
-    if(req.session.username === ""){
-        return res.json({
-            valid: false
-        })
-    }
-    else{
-        return res.json({
-            username: req.session.username,
-            valid: true, 
-        })
-    }
-});
+ParentProfile(app, workingTable);
 
 app.listen(port, ()=>{
     console.log(`Server Started on port localhost:${port}...`)

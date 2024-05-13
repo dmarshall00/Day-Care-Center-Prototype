@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 var HOST = process.env.HOST;
-var USER = process.env.USER3;
+var USER = process.env.USER;
 var PASSWORD = process.env.PASSWORD;
 var DBASE = process.env.DBASE;
 var PORT = process.env.PORT;
@@ -29,6 +29,7 @@ export function ChooseTable(user)
         case 'Admin':
             return admintable;
         default:
+            console.error("No user!");
             return null;
     }
 }

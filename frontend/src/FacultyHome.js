@@ -8,7 +8,7 @@ function FacultyHome() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:3030/fhome')
+        axios.get('http://localhost:3030/home')
         .then( res => {
             console.log(res.data);
             if(res.data.valid)
