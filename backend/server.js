@@ -4,12 +4,12 @@ import cors from 'cors';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import { ParentProfile } from './parentface.mjs';
+import { /*ChildInsert, ChildNum,*/ ParentProfile } from './parentface.mjs';
 
 const Express = pkg;
 const app = Express();
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3001"],
     methods: ["POST", "GET"],
     credentials: true
 }));
@@ -27,7 +27,6 @@ app.use(session({
 }));
 
 var port = 3030;
-var workingTable;
 
 sequelize.authenticate().then(()=>{
     console.log("----------------\nSequelize connected...");
@@ -66,7 +65,8 @@ app.post('/login', (req, res) => {
     const password = req.body.password[0];
 
     var table = ChooseTable(req.body.User[0]);
-    workingTable = table;
+    console.log("----------------\n", req.body, "\n");
+    // console.log("----------------\n", username, "\n",password, "\n");
 
     sequelize.sync()
     .then(() => {
@@ -80,7 +80,7 @@ app.post('/login', (req, res) => {
             console.log("----------------\n", data, "\n----------------");
             if(data.length > 0)
             {
-                //req.session.ID = data[0].ParentID;
+                req.session.user = req.body.User[0];
                 switch (req.body.User[0])
                 {
                     case 'Parent':
@@ -93,8 +93,6 @@ app.post('/login', (req, res) => {
                     case 'Admin':
                         req.session.ID = data[0].AdminID;
                         break;
-                    default:
-                        console.error("No user!");
                 }
                 req.session.username = data[0].UserName;
                 req.session.Fname = data[0].FirstName;
@@ -120,18 +118,43 @@ app.post('/login', (req, res) => {
             }
         })
     }).catch((error) => {
+        console.error("Error:\n" + error);
         return res.json({Message: "Error:\n" + error});
     });
 });
 
 app.get('/home', (req, res) => {
     console.log(req.session.username);
+
     if(req.session.username === ""){
         return res.json({
             valid: false
         })
     }
     else{
+        console.log("----------------\n", req.session.user, "\n");
+        sequelize.sync()
+        .then(() => {
+
+            //update the table
+            var table = ChooseTable(req.session.user);
+            const row = table.findOne({
+                where: {
+                    UserName: req.session.username
+                }
+            });
+            if (!row) {
+                console.log('user is missing');
+            }
+            else{
+                req.session.Fname = row.FirstName;
+                req.session.Lname = row.LastName;
+                req.session.Pnum = row.PhoneNumber;
+                req.session.Email = row.Email;
+                req.session.Address = row.ParentAddress;
+            }
+
+        })
         return res.json({
             username: req.session.username,
             Fname: req.session.Fname,
@@ -139,13 +162,14 @@ app.get('/home', (req, res) => {
             Pnum: req.session.Pnum,
             Email: req.session.Email,
             Address: req.session.Address,
-            values: req.session.values,
             valid: true, 
         })
     }
 });
 
-ParentProfile(app, workingTable);
+ParentProfile(app);
+// ChildNum(app);
+// ChildInsert(app);
 
 app.listen(port, ()=>{
     console.log(`Server Started on port localhost:${port}...`)

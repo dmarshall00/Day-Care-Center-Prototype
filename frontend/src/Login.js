@@ -46,6 +46,7 @@ function ParentLogin() {
                 }
                 else{
                     alert("No records");
+                    console.log(res.data.Message);
                 }
             })
             .catch(err => {

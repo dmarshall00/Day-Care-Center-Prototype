@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 var HOST = process.env.HOST;
-var USER = process.env.USER;
+var USER = process.env.USER3;
 var PASSWORD = process.env.PASSWORD;
 var DBASE = process.env.DBASE;
 var PORT = process.env.PORT;
@@ -129,3 +129,26 @@ var admintable = sequelize.define("Admininfo", {
         unique: true
     }
 });
+
+// export var childTable = sequelize.define("ChildrenInfo", {
+//     ChildID: {
+//         type: DataTypes.INTEGER,
+//         autoIncrement: true,
+//         primaryKey: true
+//     },
+//     Name: {
+//         type: DataTypes.STRING,
+//         allowNull: false
+//     },
+//     ParentID: {
+//         type: DataTypes.INTEGER,
+//         references: 'parentinfos',
+//         referencesKey: "ParentID",
+//         allowNull: false
+//     },
+//     Comments: {
+//         type: DataTypes.STRING,
+//     }
+// });
+
+// parenttable.hasMany(childTable);

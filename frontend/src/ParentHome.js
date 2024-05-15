@@ -3,24 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 
 function ParentHome() {
-    const [username, setUserName] = useState('');
-    const [Fname, setFName] = useState('');
-    const [Lname, setLName] = useState('');
-    const [Pnum, setNum] = useState('');
-    const [Email, setEmail] = useState('');
-    const [Address, setAddy] = useState('');
-
-    const [values, setValues] = useState({
-        Fname: '',
-        Lname: '',
-        Pnum: '',
-        Email: '',
-        Address: ''
-    });
-
     var showForm = true;
 
     const navigate = useNavigate();
+
+    //ParentInfo
+    const [username, setUserName] = useState('');
+    // const [Fname, setFName] = useState('');
+    // const [Lname, setLName] = useState('');
+    // const [Pnum, setNum] = useState('');
+    // const [Email, setEmail] = useState('');
+    // const [Address, setAddy] = useState('');
 
     useEffect(() => {
         axios.get('http://localhost:3030/home')
@@ -30,11 +23,11 @@ function ParentHome() {
             {
                 console.log(res.data.username);
                 setUserName(res.data.username);
-                setFName(res.data.Fname);
-                setLName(res.data.Lname);
-                setNum(res.data.Pnum);
-                setEmail(res.data.Email);
-                setAddy(res.data.Address);
+                // setFName(res.data.Fname);
+                // setLName(res.data.Lname);
+                // setNum(res.data.Pnum);
+                // setEmail(res.data.Email);
+                // setAddy(res.data.Address);
             }
             else
             {
@@ -51,16 +44,26 @@ function ParentHome() {
         console.log("Show: " + showForm);
     }
 
-    const handleInput = (event) =>{
+    //ParentInfo
+
+    const [parentvalues, setparentValues] = useState({
+        Fname: '',
+        Lname: '',
+        Pnum: '',
+        Email: '',
+        Address: ''
+    });
+
+    const handleInputProfile = (event) =>{
         event.preventDefault();
         //console.log([event.target.name] +": " + [event.target.value]);
-        setValues(prev => ({...prev, [event.target.name]: [event.target.value]}));
+        setparentValues(prev => ({...prev, [event.target.name]: [event.target.value]}));
     }
 
-    const handleSubmit = async (event) =>{
+    const handleSubmitProfile = async (event) =>{
         //event.preventDefault();
-        console.log(values);
-        axios.post('http://localhost:3030/fillp', values)
+        console.log(parentvalues);
+        axios.post('http://localhost:3030/fillp', parentvalues)
         .then({
 
         })
@@ -69,10 +72,13 @@ function ParentHome() {
         })
     }
 
+    //ChildrenInfo
+    //const han
+
     return(
         <div className='d-flex justify-content-center align-items-start bg-primary vh-100'>
 
-            <div className='bg-white justify-content-center p-3 rounded w-25'>
+            {/* <div className='bg-white justify-content-center p-3 rounded w-25'>
                 <h2>Profile</h2>
                 <table style={{border:'1px solid black', justifyContent: 'center'}}>
                     <tr>
@@ -107,10 +113,10 @@ function ParentHome() {
 
                 <div>
                     <button className='btn btn-default border w-100 bg-light' onClick={ShowForm}>Change Profile?</button>
-                    {(showForm === true) ? form(ShowForm, handleInput, handleSubmit) /*<span className='text-danger'><p>hi 1</p></span>*/ : null}
+                    {(showForm === true) ? form(ShowForm, handleInputProfile, handleSubmitProfile) : null}
                 </div>
 
-            </div>
+            </div> */}
 
             <div className='bg-white p-3 rounded w-25'>
                 <h2>Welcome {username}</h2>
@@ -208,5 +214,13 @@ function form(ShowForm, handleInput, handleSubmit)
         </div>
     )
 }
+
+// function ChildPart(){
+//     return(
+//         <div>
+//             <h3>Your Children in the system: {}</h3>
+//         </div>
+//     );
+// }
 
 export default ParentHome;
